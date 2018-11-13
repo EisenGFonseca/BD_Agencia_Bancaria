@@ -215,28 +215,19 @@ SELECT Conta_Corrente.cod_cc AS 'Cod',
 		INNER JOIN Agencia ON Conta_Corrente.cod_ag_fk = Agencia.cod_ag
 		INNER JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
 
-#Exercício 9
-SELECT 
-       Transferencia.cod_trans AS 'Codigo',
+#Exercício 8
+SELECT Transferencia.cod_trans AS 'Codigo',
 	   Transferencia.valor_trans AS 'Valor Transferencia',
        Transferencia.data_trans AS 'Data Transferência',
        Transferencia.descricao_trans AS 'Descrição',
-       (SELECT Cliente.nome_cli FROM Cliente INNER JOIN Transferencia ON Cliente.cod_cli = Transferencia.cod_cc_origem_fk) AS 'Origem',
-	   (SELECT Cliente.nome_cli FROM Cliente INNER JOIN Transferencia ON Cliente.cod_cli = Transferencia.cod_cc_destino_fk) AS 'Destino'
+	   (SELECT Cliente.nome_cli FROM Cliente WHERE Cliente.cod_cli = Transferencia.cod_cc_origem_fk) AS 'Origem',
+	   (SELECT Cliente.nome_cli FROM Cliente WHERE Cliente.cod_cli = Transferencia.cod_cc_destino_fk) AS 'Destino'
        
-	   
-    
-    FROM Cliente inner join Transferencia;
+    FROM Transferencia;
 	
-	
-se
-lect * from Conta_Corrente;
-select * from Transferencia;
+#Exercício 9
+SELECT 
 
-
-
-		INNER JOIN Conta_Corrente ON Transferencia.cod_cc_origem_fk = Conta_Corrente.cod_cli_fk
-		INNER JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli
-        
-        INNER JOIN Conta_Corrente ON Transferencia.cod_cc_destino_fk = Conta_Corrente.cod_cli_fk
-		INNER JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
+select * from Transferencia;	
+select * from Conta_Corrente;
+select * from Conta_Corrente inner join Agencia;
