@@ -55,11 +55,11 @@ insert into Cliente values (null, 'Jane Pereira', '444.666.444-44', '005548 sesd
 insert into Cliente values (null, 'Clodoaldo Bragança', '654.456.654-65', '654658 sesdec/RO', 'F', '1991-10-12', 9850.50, 'Av. Brasil', 'clodoaldo.bragança@gmail.com', '3423 5500'); 
 insert into Cliente values (null, 'Livia de Souza', '333.444.666-98', '0033333 sesdec/RO', 'F', '1982-01-30', 1100.00, 'Av. Ji-Parana', 'livia.souza@hotmail.com', '8498 9898'); 
 insert into Cliente values (null, 'Joab da Silva', '159.425.456-77', '001215 sesdec/RO', 'M', '2000-10-01', 4990.00, 'Av. Ji-Parana', 'joab.silva@hotmail.com', '69 8411 2321');
-insert into cliente values (null, 'Rodrigo Hilbert', '123.445.888-99', '5592 sesdec', 'M', '1970-09-30', 2500.00, 'Rua Dr. Luiz', 'rodrigo.hilbert@yahoo.com.br', '9944 4545');
-insert into cliente values (null, 'João Eujácio Teixeira Júnior', '999.445.789-99', '978999992 sesdec', 'M', '1989-01-10', 6000.00, 'Rua Silva Abreu', 'joao.eujacio@ifro.edu.br', '3421 1159');
-insert into cliente values (null, 'Everton Feline', '123.123.888-99', '12392 sesdec', 'M', '1987-12-10', 11500.00, 'Rua Alencar Vieira', 'everton.feline@gmail.com','69 84228811');
-insert into cliente values (null, 'Igor de Souza Santos', '123.345.848-99', '43299892 sesdec', 'M', '1990-12-30', 1000.00, 'Av. Brasil', 'igor.souza@gmail.com', '69 9977 7777');
-insert into cliente values (null, 'Francisco Bezerra', '888.123.111-11', '213156 sesdec', 'M', '1965-01-30', 3500.00, 'Rua Fim do Mundo', 'francisco.bezerra@ifro.edu.br', '69 3423 5502');
+insert into Cliente values (null, 'Rodrigo Hilbert', '123.445.888-99', '5592 sesdec', 'M', '1970-09-30', 2500.00, 'Rua Dr. Luiz', 'rodrigo.hilbert@yahoo.com.br', '9944 4545');
+insert into Cliente values (null, 'João Eujácio Teixeira Júnior', '999.445.789-99', '978999992 sesdec', 'M', '1989-01-10', 6000.00, 'Rua Silva Abreu', 'joao.eujacio@ifro.edu.br', '3421 1159');
+insert into Cliente values (null, 'Everton Feline', '123.123.888-99', '12392 sesdec', 'M', '1987-12-10', 11500.00, 'Rua Alencar Vieira', 'everton.feline@gmail.com','69 84228811');
+insert into Cliente values (null, 'Igor de Souza Santos', '123.345.848-99', '43299892 sesdec', 'M', '1990-12-30', 1000.00, 'Av. Brasil', 'igor.souza@gmail.com', '69 9977 7777');
+insert into Cliente values (null, 'Francisco Bezerra', '888.123.111-11', '213156 sesdec', 'M', '1965-01-30', 3500.00, 'Rua Fim do Mundo', 'francisco.bezerra@ifro.edu.br', '69 3423 5502');
 
 
 create table Conta_Corrente (
@@ -226,8 +226,34 @@ SELECT Transferencia.cod_trans AS 'Codigo',
     FROM Transferencia;
 	
 #Exercício 9
-SELECT 
+SELECT Conta_Corrente.cod_cc AS 'Codigo Conta Corrente',
+	   Conta_Corrente.numero_cc AS 'Numero',
+       Conta_Corrente.dataAbertura_cc AS 'Data',
+       Conta_Corrente.saldo_cc AS 'Saldo',
+       Conta_Corrente.valorLimite_cc AS 'Valor Limite',
+       Conta_Corrente.saldoComLimite_cc AS 'Saldo com limite',
+       
+       (SELECT Cliente.nome_cli FROM Cliente WHERE Cliente.cod_cli = Conta_Corrente.cod_cli_fk) AS 'Cliente',
+       (SELECT Agencia.cod_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Codigo Agência',
+	   (SELECT Agencia.numero_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Numero Agência',
+	   (SELECT Agencia.nome_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Nome Agência',
+	   (SELECT Agencia.telefone_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Telefone Agência',
+	--   (SELECT Banco.nome_ban FROM Banco INNER JOIN Agencia WHERE Banco.cod_ban = Agencia.cod_ban_fk) AS 'Banco'
+      Banco.nome_ban AS 'Banco' 
+    FROM Conta_Corrente
+		INNER JOIN Agencia ON Agencia.cod_ag = Conta_Corrente.
+        cod_cc
+		INNER JOIN Banco ON Banco.cod_ban = Agencia.cod_ban_fk;
+        
+
+	
+       
+
+
 
 select * from Transferencia;	
 select * from Conta_Corrente;
 select * from Conta_Corrente inner join Agencia;
+SELECT * FROM Agencia;
+SELECT * FROM Cliente;
+SELECT * FROM Banco;
