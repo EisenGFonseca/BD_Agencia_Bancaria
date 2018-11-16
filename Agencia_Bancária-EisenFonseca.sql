@@ -238,20 +238,26 @@ SELECT Conta_Corrente.cod_cc AS 'Codigo Conta Corrente',
 	   (SELECT Agencia.numero_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Numero Agência',
 	   (SELECT Agencia.nome_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Nome Agência',
 	   (SELECT Agencia.telefone_ag FROM Agencia WHERE Agencia.cod_ag = Conta_Corrente.cod_ag_fk) AS 'Telefone Agência',
-	--   (SELECT Banco.nome_ban FROM Banco INNER JOIN Agencia WHERE Banco.cod_ban = Agencia.cod_ban_fk) AS 'Banco'
       Banco.nome_ban AS 'Banco' 
     FROM Conta_Corrente
 		INNER JOIN Agencia ON Agencia.cod_ag = Conta_Corrente.
         cod_cc
 		INNER JOIN Banco ON Banco.cod_ban = Agencia.cod_ban_fk;
         
+#Exercício 10
+# Selecione o nome do Cliente, a soma e o valor médio dos Pagamentos realizados.
+SELECT 	Cliente.nome_cli AS Cliente,
+		(SELECT SUM(Pagamento.valor_pag) INNER JOIN Pagamento.cod_cc_fk = .cod_cli);
 
 	
-       
+select sum(Pagamento.valor_pag)
+	from Pagamento 
+		inner join  Conta_Corrente on Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
 
 
 
 select * from Transferencia;	
+select * from Pagamento;	
 select * from Conta_Corrente;
 select * from Conta_Corrente inner join Agencia;
 SELECT * FROM Agencia;
