@@ -18,7 +18,7 @@ cod_ban int primary key not null auto_increment,
 nome_ban varchar (200) not null
 );
 
-insert into Banco values (null, 'Caixa Econômica Federal');
+INSERT INTO Banco VALUES (NULL, 'Caixa Econômica Federal');
 insert into Banco values (null, 'Banco do Brasil');
 
 create table Agencia (
@@ -180,7 +180,7 @@ UPDATE Conta_Corrente SET saldo_cc = 0 WHERE saldo_cc IS NULL ;
 #Exercício 2
 UPDATE Conta_Corrente 
 	SET saldo_cc = saldo_cc - (SELECT SUM(valor_pag) FROM Pagamento WHERE Conta_Corrente.cod_cc = Pagamento.cod_cc_fk) 
-	WHERE (SELECT SUM(valor_pag) FROM Pagamento WHERE Conta_Corrente.cod_cc = Pagamento.cod_cc_fk) IS NOT NULL;
+		WHERE (SELECT SUM(valor_pag) FROM Pagamento WHERE Conta_Corrente.cod_cc = Pagamento.cod_cc_fk) IS NOT NULL;
 
 #Exercío 3
 UPDATE Conta_Corrente 
@@ -190,12 +190,12 @@ UPDATE Conta_Corrente
 #Exercío 4
 UPDATE Conta_Corrente 
 	SET saldo_cc = saldo_cc - (SELECT SUM(valor_trans) FROM Transferencia WHERE Conta_Corrente.cod_cc = Transferencia.cod_cc_origem_fk)
-	WHERE (SELECT SUM(valor_trans) FROM Transferencia WHERE Conta_Corrente.cod_cc = Transferencia.cod_cc_origem_fk);
+		WHERE (SELECT SUM(valor_trans) FROM Transferencia WHERE Conta_Corrente.cod_cc = Transferencia.cod_cc_origem_fk);
 
 #Exercío 5
 UPDATE Conta_Corrente
 	SET saldo_cc = saldo_cc + (SELECT SUM(valor_trans) FROM Transferencia WHERE Conta_Corrente.cod_cc = Transferencia.cod_cc_destino_fk)
-	WHERE (SELECT SUM(valor_trans) FROM Transferencia WHERE Conta_Corrente.cod_cc = Transferencia.cod_cc_destino_fk);
+		WHERE (SELECT SUM(valor_trans) FROM Transferencia WHERE Conta_Corrente.cod_cc = Transferencia.cod_cc_destino_fk);
 
 #Exercício 6
 UPDATE Conta_Corrente
@@ -213,7 +213,7 @@ SELECT Conta_Corrente.cod_cc AS 'Cod',
        
 	FROM Conta_Corrente
 		INNER JOIN Agencia ON Conta_Corrente.cod_ag_fk = Agencia.cod_ag
-		INNER JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
+			INNER JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
 
 #Exercício 8
 SELECT Transferencia.cod_trans AS 'Codigo',
@@ -246,20 +246,33 @@ SELECT Conta_Corrente.cod_cc AS 'Codigo Conta Corrente',
         
 #Exercício 10
 # Selecione o nome do Cliente, a soma e o valor médio dos Pagamentos realizados.
-SELECT 	Cliente.nome_cli AS Cliente,
-		(SELECT SUM(Pagamento.valor_pag) INNER JOIN Pagamento.cod_cc_fk = .cod_cli);
-
+SELECT 	Cliente.nome_cli AS 'Cliente'
+		#(SELECT SUM(Pagamento.valor_pag) FROM Pagamento	
+		#	INNER JOIN Conta_Corrente ON Pagamento.cod_cc_fk = Conta_Corrente.cod_cc
+		#		INNER JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli) AS 'Soma Pagamentos'
+		#(SELECT COUNT(Pagamento.valor_pag) INNER JOIN Pagamento.cod_cc_fk = .cod_cli) AS 'Media Pagamentos';
+	FROM Pagamento
+		INNER JOIN Conta_Corrente ON Pagamento.cod_cc_fk = Conta_Corrente.cod_cc
+			INNER JOIN Cliente WHERE Conta_Corrente.cod_cli_fk = Cliente.cod_cli; 
+			
+#Exercício 11
+#Selecione o código e o nome do cliente, informando a soma dos Saques e Depósitos realizados. Personalize os resultados para melhor compreensão do resultado.
+SELECT 
+	Cliente.cod_cli AS 'Cod',
+    Cliente.nome_cli AS 'Nome',
 	
-select sum(Pagamento.valor_pag)
-	from Pagamento 
-		inner join  Conta_Corrente on Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
-
+    (SELECT SUM(Saque.valor_saq) FROM Saque WHERE 
+  ;  
+SELECT SUM(Saque.valor_saq) FROM Saque INNER JOIN Conta_Corrente ON Saque.cod_cc_fk = Conta_Corrente.cod_cc);
 
 
 select * from Transferencia;	
+select * from Saque;	
 select * from Pagamento;	
 select * from Conta_Corrente;
 select * from Conta_Corrente inner join Agencia;
 SELECT * FROM Agencia;
 SELECT * FROM Cliente;
 SELECT * FROM Banco;
+
+SELECT SUM(300+54+89+321+123);
