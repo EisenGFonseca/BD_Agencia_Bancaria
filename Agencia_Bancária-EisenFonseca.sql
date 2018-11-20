@@ -261,9 +261,13 @@ SELECT
 	Cliente.cod_cli AS 'Cod',
     Cliente.nome_cli AS 'Nome',
 	
-    (SELECT SUM(Saque.valor_saq) FROM Saque WHERE 
-  ;  
-SELECT SUM(Saque.valor_saq) FROM Saque INNER JOIN Conta_Corrente ON Saque.cod_cc_fk = Conta_Corrente.cod_cc);
+    (SELECT SUM(Saque.valor_saq) FROM Saque INNER JOIN Conta_Corrente ON Saque.cod_cc_fk = Conta_Corrente.cod_cc)
+    
+	FROM Saque 
+		INNER JOIN Conta_Corrente ON Conta_Corrente.cod_cc = Saque.cod_cc_fk
+			  JOIN Cliente ON Conta_Corrente.cod_cli_fk = Cliente.cod_cli;
+    
+    
 
 
 select * from Transferencia;	
